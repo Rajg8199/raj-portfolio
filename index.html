@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Raj Gupta | Shopify Developer Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #0b1020;
+      --accent: #00f5a0;
+      --accent-soft: rgba(0, 245, 160, 0.08);
+      --accent2: #00d9ff;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --card-bg: rgba(15, 23, 42, 0.9);
+      --border-subtle: rgba(148, 163, 184, 0.3);
+      --radius-xl: 1.5rem;
+      --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.6);
+      --transition-fast: 220ms ease-out;
+      --transition-slow: 400ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      scroll-behavior: smooth;
+      background: radial-gradient(circle at top, #111827 0, #020617 45%, #000 100%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ------- Global Layout -------- */
+
+    .page-wrapper {
+      position: relative;
+      isolation: isolate;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 6rem 1.5rem 4rem;
+    }
+
+    section {
+      padding: 4rem 0;
+      position: relative;
+    }
+
+    @media (min-width: 1024px) {
+      main {
+        padding-top: 7rem;
+      }
+      section {
+        padding: 5rem 0;
+      }
+    }
+
+    /* ------- Background FX -------- */
+
+    .gradient-orbit {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.12), transparent 55%),
+        radial-gradient(circle at 80% 10%, rgba(59, 130, 246, 0.14), transparent 55%),
+        radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.15), transparent 55%),
+        radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.09), transparent 55%);
+      filter: blur(1px);
+    }
+
+    .scanline {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px
+      );
+      background-size: 100% 2px;
+      mix-blend-mode: soft-light;
+      opacity: 0.2;
+      animation: scan 12s linear infinite;
+    }
+
+    @keyframes scan {
+      0% {
+        transform: translateY(-10%);
+      }
+      100% {
+        transform: translateY(10%);
+      }
+    }
+
+    /* ------- Navbar -------- */
+
+    header.navbar {
+      position: fixed;
+      inset-inline: 0;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.88),
+        rgba(15, 23, 42, 0.55),
+        transparent
+      );
+      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle at 10% 0, #22c55e, #0ea5e9, #1d2538);
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.8), var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-avatar::after {
+      content: "RG";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #e5e7eb;
+      text-shadow: 0 0 12px rgba(15, 23, 42, 0.8);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .logo-text-main {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .logo-text-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 1.4rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      text-decoration: none;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.75rem;
+      padding-bottom: 0.1rem;
+      transition: color var(--transition-fast);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.25rem;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      transition: width var(--transition-slow);
+    }
+
+    .nav-links a:hover {
+      color: #e5e7eb;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .pill-availability {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.22rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.12);
+      border: 1px solid rgba(22, 163, 74, 0.4);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.17em;
+      color: #bbf7d0;
+    }
+
+    .pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
+      animation: ping 1.6s infinite;
+    }
+
+    @keyframes ping {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      70% {
+        transform: scale(1.8);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1.8);
+        opacity: 0;
+      }
+    }
+
+    .primary-btn {
+      position: relative;
+      border: none;
+      cursor: pointer;
+      padding: 0.55rem 1.15rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-weight: 600;
+      color: #020617;
+      background: radial-gradient(circle at 0 0, #facc15, #22c55e 40%, #06b6d4 100%);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 10px 30px rgba(8, 47, 73, 0.8);
+      overflow: hidden;
+    }
+
+    .primary-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .primary-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.7), transparent 55%);
+      transform: translateX(-120%);
+      transition: transform 400ms ease-out;
+      opacity: 0.9;
+    }
+
+    .primary-btn:hover::after {
+      transform: translateX(40%);
+    }
+
+    /* ------- Hero Section -------- */
+
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-intro {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(15, 23, 42, 0.8);
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.9);
+      margin-bottom: 1.4rem;
+      font-size: 0.75rem;
+    }
+
+    .hero-badge-tag {
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.22);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #bfdbfe;
+    }
+
+    .hero-badge-text {
+      color: var(--muted);
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 3.3vw + 1.7rem, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title span.highlight {
+      background: linear-gradient(120deg, #22c55e, #06b6d4, #a855f7);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      max-width: 34rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-subtitle strong {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(31, 41, 55, 0.9);
+    }
+
+    .hero-meta .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent2);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .ghost-btn {
+      border-radius: 999px;
+      padding: 0.55rem 1.1rem;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .ghost-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
+      border-color: rgba(148, 163, 184, 0.9);
+      color: #e5e7eb;
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 320px;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-visual {
+        height: 380px;
+      }
+    }
+
+    .hero-orbit-card {
+      position: absolute;
+      inset: 0;
+      border-radius: 1.75rem;
+      background: radial-gradient(
+          circle at top,
+          rgba(56, 189, 248, 0.35),
+          transparent 55%
+        ),
+        radial-gradient(circle at bottom, rgba(45, 212, 191, 0.35), transparent 55%),
+        linear-gradient(145deg, #020617, #020617);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow:
+        0 24px 60px rgba(15, 23, 42, 1),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform-origin: center;
+      transform: perspective(1200px) rotateX(9deg) rotateY(-12deg);
+      transition: transform 600ms ease-out;
+    }
+
+    .hero-visual:hover .hero-orbit-card {
+      transform: perspective(1200px) rotateX(3deg) rotateY(-3deg) translateY(-6px);
+    }
+
+    .orbit-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.4rem;
+    }
+
+    .orbit-label {
+      font-size: 0.75rem;
+      color: #cbd5f5;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .orbit-chip {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .orbit-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .metric-card {
+      padding: 0.8rem 0.7rem;
+      border-radius: 1rem;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(30, 64, 175, 0.7);
+      font-size: 0.7rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::after {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.5), transparent 55%);
+      opacity: 0;
+      transition: opacity 400ms ease-out;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+
+    .metric-value {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .metric-pill {
+      margin-top: 0.3rem;
+      font-size: 0.65rem;
+      color: #a5b4fc;
+      opacity: 0.9;
+    }
+
+    .hero-visual:hover .metric-card::after {
+      opacity: 1;
+    }
+
+    .orbit-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .orbit-footer span strong {
+      color: #e5e7eb;
+    }
+
+    .orbit-stack {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .stack-tag {
+      padding: 0.2rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Parallax layers in hero */
+
+    .parallax-layer {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(16px);
+      opacity: 0.75;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .p-layer-1 {
+      width: 210px;
+      height: 210px;
+      background: radial-gradient(circle at 30% 0, #22c55e, transparent 55%);
+      top: -40px;
+      left: -60px;
+    }
+
+    .p-layer-2 {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle at 70% 0, #0ea5e9, transparent 55%);
+      bottom: -60px;
+      right: -40px;
+    }
+
+    .p-layer-3 {
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle at 50% 0, #f97316, transparent 55%);
+      top: 40%;
+      right: 40%;
+    }
+
+    /* ------- Section titles -------- */
+
+    .section-label {
+      text-transform: uppercase;
+      font-size: 0.76rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+
+    .section-heading-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .section-caption {
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 22rem;
+      text-align: right;
+    }
+
+    @media (max-width: 768px) {
+      .section-heading-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .section-caption {
+        text-align: left;
+      }
+    }
+
+    /* ------- About / Skills -------- */
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(
+        145deg,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.8)
+      );
+      box-shadow: var(--shadow-soft);
+      padding: 1.6rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.2), transparent 55%);
+      opacity: 0;
+      transition: opacity 600ms ease-out;
+      pointer-events: none;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .about-text {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+    }
+
+    .about-item-label {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .about-item-value {
+      color: #e5e7eb;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.7rem;
+    }
+
+    .chip {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+      font-size: 0.85rem;
+    }
+
+    .skill-item {
+      padding: 0.6rem 0.7rem;
+      border-radius: 0.9rem;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast);
+    }
+
+    .skill-item span:first-child {
+      color: #e5e7eb;
+    }
+
+    .skill-dot-row {
+      display: flex;
+      gap: 0.15rem;
+    }
+
+    .skill-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(75, 85, 99, 0.9);
+    }
+
+    .skill-dot.active {
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+    }
+
+    .skill-item:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
+      border-color: rgba(148, 163, 184, 0.9);
+    }
+
+    /* ------- Experience -------- */
+
+    .timeline {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.1rem;
+      align-items: flex-start;
+    }
+
+    .timeline-marker {
+      position: relative;
+      margin-top: 0.3rem;
+    }
+
+    .marker-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.35);
+    }
+
+    .marker-line {
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(148, 163, 184, 0.8), transparent);
+      height: 100%;
+      margin: 0 auto;
+      margin-top: 0.15rem;
+    }
+
+    .timeline-card {
+      padding: 1rem 1.1rem;
+      border-radius: 1rem;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+      font-size: 0.86rem;
+    }
+
+    .timeline-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(148, 163, 184, 0.9);
+      box-shadow: var(--shadow-soft);
+      background: radial-gradient(
+          circle at top left,
+          rgba(34, 197, 94, 0.08),
+          transparent 55%
+        ),
+        rgba(15, 23, 42, 0.96);
+    }
+
+    .timeline-top-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.7rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-role {
+      font-weight: 600;
+    }
+
+    .timeline-company {
+      color: #a5b4fc;
+      font-size: 0.82rem;
+    }
+
+    .timeline-time {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .timeline-body {
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.3rem;
+    }
+
+    .timeline-tag {
+      padding: 0.18rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* ------- Projects -------- */
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .project-card {
+      position: relative;
+      border-radius: 1.2rem;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: radial-gradient(circle at top, rgba(34, 197, 94, 0.12), transparent 60%),
+        rgba(15, 23, 42, 0.96);
+      padding: 1rem 1.1rem 1.1rem;
+      overflow: hidden;
+      transition:
+        transform var(--transition-slow),
+        box-shadow var(--transition-slow),
+        border-color var(--transition-slow),
+        background var(--transition-slow);
+      font-size: 0.85rem;
+    }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.35), transparent 55%);
+      transition: opacity var(--transition-slow);
+    }
+
+    .project-header {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-name {
+      font-weight: 600;
+    }
+
+    .project-chip {
+      font-size: 0.7rem;
+      padding: 0.18rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.96);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #cbd5f5;
+    }
+
+    .project-body {
+      position: relative;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .project-tags {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.28rem;
+      font-size: 0.7rem;
+    }
+
+    .project-tag {
+      padding: 0.18rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: var(--muted);
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px) translateZ(0);
+      box-shadow: var(--shadow-soft);
+      border-color: rgba(148, 163, 184, 0.95);
+      background: radial-gradient(
+          circle at top left,
+          rgba(34, 197, 94, 0.18),
+          transparent 60%
+        ),
+        rgba(15, 23, 42, 0.98);
+    }
+
+    .project-card:hover::after {
+      opacity: 1;
+    }
+
+    /* ------- Contact / Footer -------- */
+
+    .contact-card {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1.8rem;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .contact-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-main {
+      font-size: 0.94rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .contact-highlight {
+      color: #e5e7eb;
+      font-size: 1.1rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .contact-actions {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .icon-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.95);
+      background: rgba(15, 23, 42, 0.96);
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        color var(--transition-fast);
+    }
+
+    .icon-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(148, 163, 184, 0.95);
+      box-shadow: var(--shadow-soft);
+      color: #e5e7eb;
+    }
+
+    .contact-side {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .contact-detail-row {
+      margin-top: 0.4rem;
+    }
+
+    .contact-label {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.7rem;
+      color: #6b7280;
+    }
+
+    .contact-value a {
+      color: #e5e7eb;
+      text-decoration: none;
+    }
+
+    .contact-value a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 1.8rem 1.5rem 1.5rem;
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.98), #020617);
+    }
+
+    /* ------- Scroll reveal -------- */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 600ms ease-out, transform 600ms ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="gradient-orbit"></div>
+  <div class="scanline"></div>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="logo-mark">
+        <div class="logo-avatar"></div>
+        <div class="logo-text">
+          <div class="logo-text-main">Raj Gupta</div>
+          <div class="logo-text-sub">Shopify Developer</div>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-cta">
+        <div class="pill-availability">
+          <span class="pill-dot"></span>
+          <span>Available for Freelance</span>
+        </div>
+        <button class="primary-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+          <span>Book a Shopify Build</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-wrapper">
+    <main>
+      <!-- HERO -->
+      <section id="hero">
+        <div class="hero-grid">
+          <div class="hero-intro reveal">
+            <div class="hero-badge">
+              <span class="hero-badge-tag">Shopify Specialist</span>
+              <span class="hero-badge-text">Custom themes, fast storefronts & clean Liquid.</span>
+            </div>
+
+            <h1 class="hero-title">
+              I build <span class="highlight">high-converting</span><br />
+              Shopify stores that look<br />
+              sharp & load fast.
+            </h1>
+
+            <p class="hero-subtitle">
+              I’m Raj Gupta, a <strong>Shopify Developer</strong> with experience building and maintaining
+              <strong>20+ Shopify stores for global clients</strong> — from custom Liquid sections to performance
+              optimization and pixel-perfect responsive UI.:contentReference[oaicite:1]{index=1}
+            </p>
+
+            <div class="hero-meta">
+              <span><span class="dot"></span> 2–3 years Shopify / Frontend experience</span>
+              <span><span class="dot"></span> Based in Raxaul, India</span>
+              <span><span class="dot"></span> Focus: Performance & UX</span>
+            </div>
+
+            <div class="hero-actions">
+              <button class="primary-btn" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">
+                <span>View Shopify Work</span>
+              </button>
+              <button class="ghost-btn" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">
+                <span>Experience timeline</span>
+                <span>↘</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="hero-visual reveal">
+            <div class="hero-orbit-card">
+              <div class="orbit-header">
+                <div>
+                  <div class="orbit-label">Storefront performance dashboard</div>
+                  <div style="font-size:0.78rem;color:#cbd5f5;margin-top:0.25rem;">
+                    Typical metrics after my optimization passes.
+                  </div>
+                </div>
+                <div class="orbit-chip">Liquid • JS • Shopify</div>
+              </div>
+
+              <div class="orbit-metrics">
+                <div class="metric-card">
+                  <div class="metric-label">PageSpeed Score</div>
+                  <div class="metric-value">90+ / 100</div>
+                  <div class="metric-pill">Core Web Vitals green</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Load Time</div>
+                  <div class="metric-value">&lt; 2.5s</div>
+                  <div class="metric-pill">On 4G mobile</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Apps</div>
+                  <div class="metric-value">Optimized</div>
+                  <div class="metric-pill">Only what's needed</div>
+                </div>
+              </div>
+
+              <div class="orbit-footer">
+                <span><strong>20+ Shopify builds</strong> optimized for speed, UX and conversions.</span>
+                <div class="orbit-stack">
+                  <span class="stack-tag">Shopify CLI</span>
+                  <span class="stack-tag">Replo</span>
+                  <span class="stack-tag">Instant Page</span>
+                </div>
+              </div>
+
+              <!-- Parallax light blobs -->
+              <div class="parallax-layer p-layer-1" data-speed="-0.25"></div>
+              <div class="parallax-layer p-layer-2" data-speed="-0.18"></div>
+              <div class="parallax-layer p-layer-3" data-speed="-0.12"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT + SKILLS -->
+      <section id="about">
+        <div class="section-heading-row reveal">
+          <div>
+            <div class="section-label">About Raj</div>
+            <h2 class="section-title">A detail-obsessed Shopify developer.</h2>
+          </div>
+          <p class="section-caption">
+            From QA to frontend to dedicated Shopify work — I combine testing discipline, clean UI, and
+            performance-first builds to ship reliable storefronts.
+          </p>
+        </div>
+
+        <div class="two-col">
+          <div class="card reveal">
+            <p class="about-text">
+              I started in <strong>QA at ImpactQA</strong>, moved into <strong>Frontend at Mine Cart</strong>,
+              and now focus on <strong>Shopify development at Inweave Studios</strong>. That journey means I care
+              deeply about both <strong>how things look</strong> and <strong>how they behave under real traffic</strong>.:contentReference[oaicite:2]{index=2}
+            </p>
+
+            <div class="about-grid">
+              <div>
+                <div class="about-item-label">Current Role</div>
+                <div class="about-item-value">Shopify Developer — Inweave Studios</div>
+              </div>
+              <div>
+                <div class="about-item-label">Focus</div>
+                <div class="about-item-value">Custom themes, speed, UX</div>
+              </div>
+              <div>
+                <div class="about-item-label">Based in</div>
+                <div class="about-item-value">Raxaul, India</div>
+              </div>
+              <div>
+                <div class="about-item-label">Storefronts Shipped</div>
+                <div class="about-item-value">20+ client projects</div>
+              </div>
+            </div>
+
+            <div class="chip-row">
+              <span class="chip">Conversion-focused layouts</span>
+              <span class="chip">Clean Liquid architecture</span>
+              <span class="chip">Responsive UI for all screens</span>
+              <span class="chip">Debugging & QA mindset</span>
+            </div>
+          </div>
+
+          <div class="card reveal" id="skills">
+            <div class="about-item-label">Core Stack</div>
+            <div class="skill-grid" style="margin-top:0.5rem;">
+              <div class="skill-item">
+                <span>Shopify Theme Customization</span>
+                <div class="skill-dot-row">
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span>Liquid Coding</span>
+                <div class="skill-dot-row">
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot"></span>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span>HTML / CSS / JavaScript</span>
+                <div class="skill-dot-row">
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot"></span>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span>Responsive UI Design</span>
+                <div class="skill-dot-row">
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot"></span>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span>Shopify CLI & GitHub</span>
+                <div class="skill-dot-row">
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot"></span>
+                </div>
+              </div>
+              <div class="skill-item">
+                <span>Performance Optimization</span>
+                <div class="skill-dot-row">
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot active"></span>
+                  <span class="skill-dot"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-item-label" style="margin-top:1.2rem;">Page Builders & Apps</div>
+            <div class="chip-row">
+              <span class="chip">Instant Page Builder</span>
+              <span class="chip">Replo Page Builder</span>
+              <span class="chip">Third-party app setup</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience">
+        <div class="section-heading-row reveal">
+          <div>
+            <div class="section-label">Experience</div>
+            <h2 class="section-title">From QA to Shopify specialist.</h2>
+          </div>
+          <p class="section-caption">
+            Every role added a layer — testing discipline, frontend architecture, and now
+            full-fledged Shopify builds for international brands.
+          </p>
+        </div>
+
+        <div class="card reveal">
+          <div class="timeline">
+            <!-- Inweave Studios -->
+            <div class="timeline-item">
+              <div class="timeline-marker">
+                <div class="marker-dot"></div>
+                <div class="marker-line"></div>
+              </div>
+              <div class="timeline-card">
+                <div class="timeline-top-row">
+                  <div>
+                    <div class="timeline-role">Shopify Developer</div>
+                    <div class="timeline-company">Inweave Studios</div>
+                  </div>
+                  <div class="timeline-time">Oct 2024 – Nov 2025</div>
+                </div>
+                <p class="timeline-body">
+                  Built and maintained <strong>20+ Shopify stores for global clients</strong>. Developed
+                  custom Liquid sections, reusable components, and optimized storefront performance &
+                  mobile responsiveness. Owned everything from theme structure to app integration.:contentReference[oaicite:3]{index=3}
+                </p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">Custom sections</span>
+                  <span class="timeline-tag">Theme performance</span>
+                  <span class="timeline-tag">Mobile-first UX</span>
+                  <span class="timeline-tag">App integrations</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mine Cart -->
+            <div class="timeline-item">
+              <div class="timeline-marker">
+                <div class="marker-dot"></div>
+                <div class="marker-line"></div>
+              </div>
+              <div class="timeline-card">
+                <div class="timeline-top-row">
+                  <div>
+                    <div class="timeline-role">Frontend Developer</div>
+                    <div class="timeline-company">Mine Cart</div>
+                  </div>
+                  <div class="timeline-time">Aug 2023 – Oct 2024</div>
+                </div>
+                <p class="timeline-body">
+                  Led the frontend build of <strong>Neet Support</strong> from scratch — integrating backend APIs,
+                  handling deployment, and ensuring code quality, optimization, and responsiveness across devices.:contentReference[oaicite:4]{index=4}
+                </p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">Frontend architecture</span>
+                  <span class="timeline-tag">API integration</span>
+                  <span class="timeline-tag">Deployment</span>
+                  <span class="timeline-tag">Responsive layout</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ImpactQA -->
+            <div class="timeline-item">
+              <div class="timeline-marker">
+                <div class="marker-dot"></div>
+              </div>
+              <div class="timeline-card">
+                <div class="timeline-top-row">
+                  <div>
+                    <div class="timeline-role">QA Intern</div>
+                    <div class="timeline-company">ImpactQA</div>
+                  </div>
+                  <div class="timeline-time">Oct 2022 – Jul 2023</div>
+                </div>
+                <p class="timeline-body">
+                  Performed functional, manual, and automation testing for projects like ZipHQ.
+                  Built the habit of breaking things early so production stays stable.:contentReference[oaicite:5]{index=5}
+                </p>
+                <div class="timeline-tags">
+                  <span class="timeline-tag">Functional testing</span>
+                  <span class="timeline-tag">Automation</span>
+                  <span class="timeline-tag">Manual QA</span>
+                  <span class="timeline-tag">Bug reports</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects">
+        <div class="section-heading-row reveal">
+          <div>
+            <div class="section-label">Shopify Projects</div>
+            <h2 class="section-title">Recent brands & storefronts.</h2>
+          </div>
+          <p class="section-caption">
+            A selection of Shopify projects I’ve worked on at Inweave Studios — spanning skincare,
+            wellness, DTC brands and more.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <!-- You can later attach real links to each project -->
+          <article class="project-card reveal">
+            <div class="project-header">
+              <h3 class="project-name">Nord & Ommi</h3>
+              <span class="project-chip">DTC Brands</span>
+            </div>
+            <p class="project-body">
+              Built custom product page sections and optimized collections for smooth browsing
+              on mobile. Worked on navigation structure and subtle micro-interactions to keep
+              users focused on products.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Custom PDP sections</span>
+              <span class="project-tag">Navigation UX</span>
+              <span class="project-tag">Mobile-first</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-header">
+              <h3 class="project-name">Rip Tie Hair & Meraki Medicinal</h3>
+              <span class="project-chip">Beauty / Wellness</span>
+            </div>
+            <p class="project-body">
+              Implemented branded sections for storytelling, ingredient highlights, and bundle
+              offers. Ensured fast load times while using rich imagery and content blocks.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Brand storytelling</span>
+              <span class="project-tag">Bundles & offers</span>
+              <span class="project-tag">Image optimization</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-header">
+              <h3 class="project-name">Whitecap Manufacturing & Sticky Grippy</h3>
+              <span class="project-chip">B2B / DTC</span>
+            </div>
+            <p class="project-body">
+              Balanced B2B information with DTC clarity. Created reusable Liquid components for
+              specs, FAQs and content blocks that can be used across pages.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Reusable sections</span>
+              <span class="project-tag">B2B layouts</span>
+              <span class="project-tag">FAQ components</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-header">
+              <h3 class="project-name">Honey Cloudz & Norse Organics</h3>
+              <span class="project-chip">Lifestyle</span>
+            </div>
+            <p class="project-body">
+              Focused on storytelling homepages with scroll-based sections, trust badges and
+              reviews that support conversions without feeling pushy.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Homepage flows</span>
+              <span class="project-tag">Trust badges</span>
+              <span class="project-tag">Reviews sections</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-header">
+              <h3 class="project-name">Volant, Stasis & Zenimal</h3>
+              <span class="project-chip">Wellness</span>
+            </div>
+            <p class="project-body">
+              Created calm, clean layouts with attention to spacing and typography, while still
+              integrating apps for subscriptions, upsells, and analytics.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Calm UI</span>
+              <span class="project-tag">App integrations</span>
+              <span class="project-tag">Subscriptions</span>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-header">
+              <h3 class="project-name">The Lavish Goat, Folicare & Klunk</h3>
+              <span class="project-chip">E-commerce</span>
+            </div>
+            <p class="project-body">
+              Tailored layouts for different product types — from self-care to supplements —
+              while maintaining fast performance and clear, accessible UI.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Conversion-oriented</span>
+              <span class="project-tag">Accessibility</span>
+              <span class="project-tag">Performance tuning</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <div class="section-heading-row reveal">
+          <div>
+            <div class="section-label">Contact</div>
+            <h2 class="section-title">Let’s build your next Shopify store.</h2>
+          </div>
+          <p class="section-caption">
+            Share your brand, goals and any reference stores — I’ll help you design, customize and
+            optimize a Shopify experience that feels tailored, fast and on-brand.
+          </p>
+        </div>
+
+        <div class="card contact-card reveal">
+          <div class="contact-main">
+            <div class="contact-highlight">
+              Ready for a custom theme, a redesign, or performance optimization?
+            </div>
+            <p>
+              I typically help founders, marketers and agencies who want <strong>clean builds</strong>,
+              fewer unnecessary apps, and <strong>speed that actually feels fast</strong> on mobile.
+            </p>
+            <p style="margin-top:0.7rem;">
+              Send me a quick note with your current store (or idea), and I’ll get back with how I
+              can help — theme suggestions, section ideas, and a rough plan.
+            </p>
+
+            <div class="contact-actions">
+              <a class="icon-link" href="mailto:rajg8199@gmail.com">
+                <span>✉</span>
+                <span>Email Raj</span>
+              </a>
+              <a class="icon-link" href="tel:+917256808114">
+                <span>☎</span>
+                <span>Call / WhatsApp</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-side">
+            <div class="contact-detail-row">
+              <div class="contact-label">Primary Email</div>
+              <div class="contact-value">
+                <a href="mailto:rajg8199@gmail.com">rajg8199@gmail.com</a>
+              </div>
+            </div>
+            <div class="contact-detail-row">
+              <div class="contact-label">Phone</div>
+              <div class="contact-value">
+                <a href="tel:+917256808114">+91 7256808114</a>
+              </div>
+            </div>
+            <div class="contact-detail-row" style="margin-top:0.7rem;">
+              <div class="contact-label">Location</div>
+              <div class="contact-value">Raxaul, India</div>
+            </div>
+            <div class="contact-detail-row" style="margin-top:0.7rem;">
+              <div class="contact-label">Portfolio note</div>
+              <div class="contact-value">
+                Happy to do a <strong>quick audit</strong> of your current Shopify store or idea as a first step.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> Raj Gupta — Shopify Developer. Built with semantic HTML, modern CSS and a touch of parallax.
+    </footer>
+  </div>
+
+  <script>
+    // Dynamic year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
+    revealEls.forEach((el) => observer.observe(el));
+
+    // Simple parallax for hero blobs
+    const parallaxLayers = document.querySelectorAll(".parallax-layer");
+    window.addEventListener("scroll", () => {
+      const scrolled = window.scrollY;
+      parallaxLayers.forEach((layer) => {
+        const speed = parseFloat(layer.dataset.speed || "0");
+        layer.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+  </script>
+</body>
+</html>
